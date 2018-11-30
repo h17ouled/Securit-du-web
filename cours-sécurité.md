@@ -185,3 +185,24 @@ if(isset($_GET['id']) && isset($_GET['jeton']) &&
 ```
 Ce qui  signifie : Si l’id de l’article est défini mais aussi le jeton et que ce jeton correspond au jeton de la session actuelle, alors on peut supprimer.
 Dernière note, on utilise $_GET qui récupère les paramètres depuis une URL, il aurait été préférable est **encore plus sécurisé** d’utiliser $_POST avec un formulaire pour ne pas afficher de jeton dans les URLs.
+
+# _4. L’Attaque par force brute_
+## _4.1Définition :_
+L’attaque par force brute estutilisé pour trouver un mot de passeouunecléentestantune par une et tous les combinaisonpossibles. Il nécessiteeffectivement beaucoup de temps d'exécutionmaisilestefficace. Cetteattaqueaussiestsouventcombiné avec l’attaque par dictionnairedontl’attaquantutilised’énormesdictionnairescontenant des mots de passes régulièrementutilisé.
+## _4.2 Comment s’enprotéger ?_
+Se défendrecontrel’attaque par force brute :
+### *La vérification par captcha :*
+Ce sont de petites cases avec des lettresdéformées que vousdevezrecopier pour confirmer que vousêtes un humain.
+![image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724)
+[Voici le lien de cetteimage](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724) !
+Cettedernière technique esttrès simple. Elle consiste à insérer un captcha de vérification dans vosformulaires. C'estpresqueimparable pour être certain qu'on a à faire à un humain et non à un script.
+### *Utilisation de mots de passes robustes pour une durée limitée :*
+Elle consiste à renforcer le mot de passeenévitant les écueils qui exploitent les attaques par force brute optimisée. Renforcer la force brute du mot de passeconsisteà :
+* allonger le mot de passeou la clésicelaest possible
+* utiliser la plus grandegamme de symbolespossibles (minuscules, majuscules, ponctuations, chiffres)  
+
+De plus, l’utilisateur sera forcé à changer son mot de passe après unecertainepériodedéfinie par le développeur. Ce nouveau mot de passe ne pourra pas être un mot de passe qui a été déjà utilisé par cetutilisateur.
+### *Authentication multiple :*
+L’authentification multiple (Multi-Factor Authentication enanglais qui correspond à MFA) est un système de sécurité qui fait appel à plusieursméthodesd’authentification, à partir de différentescatégoriesd’informationsd’identification (des preuves), pour vérifierl’identité de l’utilisateur qui souhaite se connecter.  
+Par exemple, l’authentification à 3 facteurs qui n’est que l’utilisation du nom de l’utilisateur, son mot de passe et ensuitel’insertion d’un code de quelqueschiffres qui a étéenvoyé à l’utilisateur (par SMS, email...) pour vérifier son identité.
+
