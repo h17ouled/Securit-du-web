@@ -204,5 +204,30 @@ Elle consiste à renforcer le mot de passeenévitant les écueils qui exploitent
 De plus, l’utilisateur sera forcé à changer son mot de passe après unecertainepériodedéfinie par le développeur. Ce nouveau mot de passe ne pourra pas être un mot de passe qui a été déjà utilisé par cetutilisateur.
 ### *Authentication multiple :*
 L’authentification multiple (Multi-Factor Authentication enanglais qui correspond à MFA) est un système de sécurité qui fait appel à plusieursméthodesd’authentification, à partir de différentescatégoriesd’informationsd’identification (des preuves), pour vérifierl’identité de l’utilisateur qui souhaite se connecter.  
-Par exemple, l’authentification à 3 facteurs qui n’est que l’utilisation du nom de l’utilisateur, son mot de passe et ensuitel’insertion d’un code de quelqueschiffres qui a étéenvoyé à l’utilisateur (par SMS, email...) pour vérifier son identité.
+Par exemple, l’authentification à 3 facteurs qui n’est que l’utilisation du nom de l’utilisateur, son mot de passe et ensuitel’insertion d’un code de quelqueschiffres qui a étéenvoyé à l’utilisateur (par SMS, email...) pour vérifier son identité.  
+
+# _5. La faille Include_
+## _5.1 Définition :_
+La faille include consiste à l’usage frauduleux de la fonction Include(). C’est une fonction utilisée dans pas mal de langage de programmation pour exécuter du code PHP situé dans une autre page, autrement dit, inclure une page dans une autre. Comme cette fonction permet l'accès à d’autres pages, elle offre aux hackers la possibilité d’accéder aux données sur le serveur. Il ya deux types de faille Include:
+*	La faille include à distance: C’est à la fois la plus fréquente et la plus facile à exploiter. Le Hacker peut inclure n’importe quelle page au biais de la fonction, y compris une page “backdoor” sur le serveur. Celle-ci va donner des droits privilégiés à son auteur et va donc lui permettre d’accéder aux données du site et de le modifier.
+*	La faille include en local: À part inclure une backdoor, la fonction include() permet de naviguer sur les répertoires du site et récupérer facilement le fichier des passwords ..
+
+## _5.2 Comment s’en protéger ?_ 
+Il faut d’abord détecter la faille sur le site. Pour ce faire, on essaye d’inclure une page inexistante et le message d’erreur php sera la preuve que la faille existe. Ensuite, il faudra rédiger un fichier htaccess de configuration qui permettra de gérer les droits d’accès aux sites et grâce au code ci-dessous, on filtrera les pages incluses:
+
+# _6. Les Virus_
+## _6.1 Définition :_
+
+De nos jours, les pirates informatiques, les auteurs de virus, les spammers et les développeurs de programmes espions sont regroupés sous le nom de « cybercriminels ». Les menaces Web aident ces individus à atteindre un objectif précis. L'un de ces objectifs est de voler des informations à des fins de revente.
+Il existe des dizaines de milliers de virus/programmes malveillants et de nouveaux sont créés chaque jour, les virus informatiques de notre époque peuvent provoquer des dommages importants en exploitant les failles de sécurité des réseaux d'entreprise, des systèmes de messagerie électronique et des sites Web. En effet, c’est un petit programme qui s’attache à un programme complet et le modifie et donc mène à une perturbation. En exécutant le programme, il y a exécution du virus en parallèle afin de contaminer le système. De plus, tous les moyens d’échange de données numériques comme les réseaux informatiques, le cédérom, les clefs USB…favorisent la diffusion du programme malveillants. Il est susceptible d'altérer le fonctionnement de votre ordinateur, de détruire des informations, voire d'en récupérer pour les transmettre à distance. Souvent, l’utilisateur déclenche lui-même l’activation du virus en ouvrant un fichier contaminé.  
+ 
+ Voici quelques exemples de virus connus:
+ 
+* Cheval de Troie : Un type de logiciel malveillant qui utilise un code malveillant pour installer des logiciels qui semble être bien, mais est masqué pour créer portes arrière dans un système,afin d’entraîner la perte ou le vol des données à partir d'une source externe.
+* Ransomware : Il infecte l’ordinateur, puis chiffre les données telles que les documents personnels, photos… et puis demandent un racon pour les récupérer. Si vous refusez d payer, les données seront supprimées.
+* Adware : Les programmes envoient automatiquement des publicités aux ordinateurs. Bien que certains adware soient relativement sans danger, d'autres variantes utilisent des outils de suivi permettant de récupérer des informations sur votre site ou sur votre historique de navigation.  
+
+## _6.2 Comment s’en protéger ?_
+Les applications web, faisant partie intégrante des processus métiers, sont une cible facile pour les cybercriminels lorsqu’elles ne sont pas sécurisées. Une fois que les menaces sont détectées, elles peuvent se propager sur tout le système et son élimination complète demande un temps et des efforts considérables. En outre, les systèmes n’appliquant pas des stratégies de sécurité bien strictes, sont les plus exposées aux menaces.  
+De plus, le meilleur moyen de se protéger contre les virus est d’équiper votre ordinateur d’un anti-virus. Ce dernier, a pour mission d’analyser tous les fichiers entrant sur votre ordinateur et d’identifier ceux qui sont infectés. En adoptant les bons gestes, et donc en respectant la mise à jour du antivirus, le fait de ne pas ouvrir les mails ou les fichiers ou même les sites internet suspicieux contribuent à la protection des menaces. Aussi, utilisez un pare-feu. Le pare-feu Windows ou tout autre pare-feu peuvent vous signaler une activité suspecte lorsqu’un virus ou un ver tente de se connecter à votre ordinateur. Un pare-feu peut également empêcher les virus, les vers et les pirates informatiques de télécharger sur votre ordinateur des programmes potentiellement malveillants.
 
