@@ -7,6 +7,7 @@ De la même manière qu’il propose un nombre presque infini de fonctionnalité
 ## Les Menaces et failles visant la sécurité du Web
 
 La conception et l’utilisation du Web exige la sécurité avec une vigilance car les la plupart des activités de ces jours se font sur l’internet et le Web. Dans ce cours, on se base sur les failles et les vulnérabilités sur le Web qui nous exigent la sécurité de nos sites Web et applications web.
+
 ## 1.  La faille Cross-Site Scripting(XSS)
 
 ### Definition
@@ -29,6 +30,72 @@ Il sera donc récupéré et exécuté à chaque fois par n’importe quel utilis
 Plusieurs techniques permettent d'éviter le XSS :
 Retraiter systématiquement le code HTML produit par l'application avant l'envoi au navigateur.
 Filtrer les variables affichées ou enregistrées avec des caractères '<' et '>' . De façon plus générale, donner des noms préfixés aux variables contenant des chaînes venant de l'extérieur pour les distinguer des autres  (par exemple le préfixe &amp; au & (ET commercial) ), et ne jamais utiliser aucune des valeurs correspondantes dans une chaîne exécutable sans filtrage préalable. Certaines fonctions ont été conçues pour cette fin là comme  htmlspecialchars() qui convertit les caractères spéciaux en entités HTML,  la fonction htmlentities() qui est identique à htmlspecialchars() sauf qu’elle filtre tous les caractères équivalents au codage html ou javascript et strip_tags()  qui supprime toutes les balises.
+
+## 2.  L’injection SQL
+
+### Définition:
+
+C’est un vecteur d’attaque basée sur une modification de requête sql qui permet aux utilisateurs malveillants d’injecter des morceaux de code non filtrés et de les exécuter. Une attaque par injection réussie peut usurper des identités, créer de nouvelles identités avec des droits d’administration, accéder à toutes les données sur le serveur ou détruire / modifier les données pour les rendre inutilisables.
+Cette attaque se fait généralement par le biais d’un formulaire.  
+  
+Source image:Deep into SQL injection SQL Injection
+ 
+Exemple basique de requête qui permet la connexion à un espace membre :
+
+``` php
+// On récupère les variables envoyées par le formulaire
+$login = $_POST['login'];
+$password = $_POST['password'];
+
+// Connexion à la BDD en PDO
+try { $bdd = new PDO('mysql:host=localhost;dbname=bdd','root',''); }
+catch (Exeption $e) { die('Erreur : ' .$e->getMessage())  or die(print_r($bdd->errorInfo())); }
+
+// Requête SQL
+$req = $bdd->query("SELECT * FROM utilisateurs WHERE login='$login' AND password='$password'");
+
+```
+ 
+
+La requête va aller chercher dans la table "utilisateurs" une entrée où le pseudo est égal à $pseudo et où le mot de passe est égal à $password. La faiblesse de ce code se trouve dans le fait que l'on peut envoyer n'importe quoi par le biais du formulaire, y compris des morceaux de code. Par exemple, imaginez qu'un utilisateur (pour une raison x ou y) décide de mettre en login "jean' #" et laisser le password vide. Notre requête deviendrait donc:
+
+``` php
+<?php
+
+$req = $bdd->query("SELECT * FROM utilisateurs WHERE login='jean' # AND password=''");
+
+// Qui sera interprété de la façon suivante
+
+$req = $bdd->query("SELECT * FROM utilisateurs WHERE login='jean'");
+
+?>
+```
+
+ le symbole # permet de faire un commentaire en PHP. Tout ce qui suit ce symbole est donc considéré par PHP comme un commentaire et n'est pas pris en compte dans la requête SQL. Grâce à cette injection l'utilisateur va pouvoir se connecter à n'importe quel compte sans connaître son mot de passe.    
+ 
+*Comment s’en protéger ? :*
+
+Pour s’en protéger, il suffit d’utiliser des requêtes préparées :
+
+``` php
+<?php
+
+// On récupère les variables envoyées par le formulaire
+$login = $_POST['login'];
+$password = $_POST['password'];
+
+// Connexion à la BDD en PDO
+try { $bdd = new PDO('mysql:host=localhost;dbname=bdd','root',''); }
+catch (Exeption $e) { die('Erreur : ' .$e->getMessage())  or die(print_r($bdd->errorInfo())); }
+
+// Requête SQL sécurisée
+$req = $bdd->prepare("SELECT * FROM utilisateurs WHERE login= ? AND password= ?");
+$req->execute(array($login, $password));
+
+?>
+```
+ 
+
 
 
 
