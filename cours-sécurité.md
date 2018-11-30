@@ -193,8 +193,8 @@ L’attaque par force brute estutilisé pour trouver un mot de passeouunecléent
 Se défendrecontrel’attaque par force brute :
 ### *La vérification par captcha :*
 Ce sont de petites cases avec des lettresdéformées que vousdevezrecopier pour confirmer que vousêtes un humain.
-![image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724)
-[Voici le lien de cetteimage](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724) !
+![image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724)  
+[Voici le lien de cette image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724) !
 Cettedernière technique esttrès simple. Elle consiste à insérer un captcha de vérification dans vosformulaires. C'estpresqueimparable pour être certain qu'on a à faire à un humain et non à un script.
 ### *Utilisation de mots de passes robustes pour une durée limitée :*
 Elle consiste à renforcer le mot de passeenévitant les écueils qui exploitent les attaques par force brute optimisée. Renforcer la force brute du mot de passeconsisteà :
@@ -229,5 +229,7 @@ Il existe des dizaines de milliers de virus/programmes malveillants et de nouvea
 
 ## _6.2 Comment s’en protéger ?_
 Les applications web, faisant partie intégrante des processus métiers, sont une cible facile pour les cybercriminels lorsqu’elles ne sont pas sécurisées. Une fois que les menaces sont détectées, elles peuvent se propager sur tout le système et son élimination complète demande un temps et des efforts considérables. En outre, les systèmes n’appliquant pas des stratégies de sécurité bien strictes, sont les plus exposées aux menaces.  
-De plus, le meilleur moyen de se protéger contre les virus est d’équiper votre ordinateur d’un anti-virus. Ce dernier, a pour mission d’analyser tous les fichiers entrant sur votre ordinateur et d’identifier ceux qui sont infectés. En adoptant les bons gestes, et donc en respectant la mise à jour du antivirus, le fait de ne pas ouvrir les mails ou les fichiers ou même les sites internet suspicieux contribuent à la protection des menaces. Aussi, utilisez un pare-feu. Le pare-feu Windows ou tout autre pare-feu peuvent vous signaler une activité suspecte lorsqu’un virus ou un ver tente de se connecter à votre ordinateur. Un pare-feu peut également empêcher les virus, les vers et les pirates informatiques de télécharger sur votre ordinateur des programmes potentiellement malveillants.
+De plus, le meilleur moyen de se protéger contre les virus est d’équiper votre ordinateur d’un anti-virus. Ce dernier, a pour mission d’analyser tous les fichiers entrant sur votre ordinateur et d’identifier ceux qui sont infectés. En adoptant les bons gestes, et donc en respectant la mise à jour du antivirus, le fait de ne pas ouvrir les mails ou les fichiers ou même les sites internet suspicieux contribuent à la protection des menaces. De plus, un pare-feu peut aussi jouer un rôle dans la protection, car il peutsignaler une activité suspecte lorsqu’un virus ou un ver tente de se connecter à votre ordinateur. Un pare-feu peut également empêcher les virus, les vers et les pirates informatiques de télécharger sur votre ordinateur des programmes potentiellement malveillants.  
 
+![image](https://upload.wikimedia.org/wikipedia/commons/5/53/Conficker.svg)
+[Voici le lien de cette image](https://upload.wikimedia.org/wikipedia/commons/5/53/Conficker.svg) !
