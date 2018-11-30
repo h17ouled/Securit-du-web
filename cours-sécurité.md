@@ -1,3 +1,37 @@
+# Cours 2018
+## La sécurité sur le web
+## Introduction
+
+De la même manière qu’il propose un nombre presque infini de fonctionnalités, le web peut porter atteinte à notre sécurité, et les failles de sécurité qui lui sont liées sont très nombreuses. Pour s’en prémunir et naviguer en toute sécurité, il faut être au courant des risques et les comprendre. Ce cours a pour but d’avertir sur ces risques, d’expliquer les mécanismes du web qui présentent des failles et sont par conséquent un danger potentiel pour les internautes. Ce cours présente également une solution de sécurité : le VPN, qui permet entre autres de cacher ses informations.
+
+## Les Menaces et failles visant la sécurité du Web
+
+La conception et l’utilisation du Web exige la sécurité avec une vigilance car les la plupart des activités de ces jours se font sur l’internet et le Web. Dans ce cours, on se base sur les failles et les vulnérabilités sur le Web qui nous exigent la sécurité de nos sites Web et applications web.
+## 1.  La faille Cross-Site Scripting(XSS)
+
+### Definition
+
+C’est une faille permettant l’injection du contenu du web via le code HTML ou Javascript dans des variables mal protégées. Il y a deux types de XSS:
+
+### A-Le XSS réfléchi(non permanent)
+
+Une faille XSS consiste à injecter du code frauduleux directement interprétable par le navigateur Web (par exemple du JavaScript ou du HTML). Cette attaque concerne plutôt la partie client c'est-à-dire vous (ou plutôt votre navigateur) puisqu'elle se base sur les informations que vous lui avez fournies au biais des champs à remplir de l’application web. Le navigateur ne fera aucune différence entre le code du site et celui injecté par le pirate, il va donc l'exécuter à votre insu. Les possibilités sont nombreuses : redirection vers un autre site, vol de cookies, modification du code HTML de la page, exécution d'exploits contre le navigateur : en bref, tout ce que ces langages de script vous permettent de faire.  Source Image:Failles de sécurité des applications Web
+ 
+Le XSS stocké(permanent)
+C’est lorsque le code malicieux est stocké sur les bases de donnée du serveur externe (l’application web). 
+Il sera donc récupéré et exécuté à chaque fois par n’importe quel utilisateur lorsque ce dernier lance le site web ou l’application web. En effet, l’application va  accepter d’exécuter cet ordre comme si la demande provenait de l’utilisateur lors de son utilisation de l’application.
+Comment s’en protéger? : 
+Plusieurs techniques permettent d'éviter le XSS :
+Retraiter systématiquement le code HTML produit par l'application avant l'envoi au navigateur.
+Filtrer les variables affichées ou enregistrées avec des caractères '<' et '>' . De façon plus générale, donner des noms préfixés aux variables contenant des chaînes venant de l'extérieur pour les distinguer des autres  (par exemple le préfixe &amp; au & (ET commercial) ), et ne jamais utiliser aucune des valeurs correspondantes dans une chaîne exécutable sans filtrage préalable. Certaines fonctions ont été conçues pour cette fin là comme  htmlspecialchars() qui convertit les caractères spéciaux en entités HTML,  la fonction htmlentities() qui est identique à htmlspecialchars() sauf qu’elle filtre tous les caractères équivalents au codage html ou javascript et strip_tags()  qui supprime toutes les balises.
+
+
+
+
+
+
+
+
 ### 3.  Cross-Site Request Forgery(CSRF) ou One click attack
 La faille CSRF peut être aussi expliquée comme la falsification inter-sites car il permet l’attaquant d'exécuter les actions en utilisant les informations de l’autre utilisateur sans son consentement c’est-à-dire que l’attaquant vise un site ou une page en utilisant l’utilisateur comme déclencheur sans qu’il le sache.
 ![image](https://images.leblogduhacker.fr/2014/02/faille-csrf1.jpg)
