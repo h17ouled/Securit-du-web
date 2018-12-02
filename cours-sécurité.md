@@ -94,129 +94,18 @@ $req->execute(array($login, $password));
 
 ?>
 ```
- 
 
-
-
-
-
-
-
-
-
-### 3.  Cross-Site Request Forgery(CSRF) ou One click attack
-La faille CSRF peut être aussi expliquée comme la falsification inter-sites car il permet l’attaquant d'exécuter les actions en utilisant les informations de l’autre utilisateur sans son consentement c’est-à-dire que l’attaquant vise un site ou une page en utilisant l’utilisateur comme déclencheur sans qu’il le sache.
-![image](https://images.leblogduhacker.fr/2014/02/faille-csrf1.jpg)
-
-[Source image:La faille CSRF, explication et contre-mesures](https://www.leblogduhacker.fr/faille-csrf-explications-contre-mesures/) Suivant l’exemple ci-dessus l’attaquant peut supprimer l’article d’un administrateur. Si on suppose que le lien de suppression d’un article soit:http://www.monblog.fr/del.php?id=1, Normalement un visiteur non connecté à la page d’administration n’a pas le droit d’éditer ou de supprimer les articles d’un blog qui ne lui appartient pas. Par contre si le visiteur connaît ce lien ça suffit pour lui d’envoyer le lien à l’administrateur en faisant en sorte que ce dernier clique et quand l’administrateur clique le lien de suppression s'exécute avec succès.
-#### Comment se protéger contre la faille CSRF ?
-Demander des confirmations à l'utilisateur pour les actions critiques, au risque d'alourdir l'enchaînement des formulaires.
-Utiliser des jetons de validité dans les formulaires : faire en sorte qu'un formulaire posté ne soit accepté que s'il a été produit quelques minutes auparavant : le jeton de validité en sera la preuve. Le jeton de validité doit être transmis en paramètre et vérifié côté serveur.
-#### Un exemple pour l’authentification par jeton
-Un jeton (aussi appelé **token** en anglais) est un nombre ou une chaîne de caractère aléatoire qui va être testée avant toute modification ou édition d’un article.
-Il se présente habituellement sous forme de **hash md5** comme celui-ci :
-``` php
-b6cf20590a57f4685c9bdc6c53d12ff8
-```
-Ce token doit être crée dans un fichier PHP qui sera appelé sur toutes les pages. Typiquement, il s’agit d’un fichier du type config.php ou functions.php.
-On génère souvent un nombre “aléatoire” avec des fonctions utilisant le temps en PHP. Par exemple on peut générer un jeton avec :
-``` php
-md5(uniqid(mt_rand(), true));
-```
-La fonction [uniqid()](http://fr2.php.net/manual/en/function.uniqid.php) génère un identifiant unique basé sur le temps en microsecondes. Cependant PHP ne recommande pas cette fonction car elle ne génère pas des chaînes impossible à deviner à l’avance.
-Du coup, on va plutôt utiliser :
-``` php
-md5(bin2hex(openssl_random_pseudo_bytes(6)));
-```
-qui est cette fois hautement **sécurisé**.
-La fonction [openssl_random_pseudo_bytes()](http://www.php.net/manual/fr/function.openssl-random-pseudo-bytes.php) génère une chaîne pseudo-aléatoire d’octets de taille 6 bits * 2 qu’on convertit ensuite en hexadécimal, 6 étant le nombre donné en paramètre de la fonction (on peut le changer).
-Ainsi, dans un fichier PHP global on va écrire le code suivant :
-``` php
-<?php
-if (!isset($_SESSION['jeton'])) {
-   $_SESSION['jeton'] = bin2hex(openssl_random_pseudo_bytes(6));
-}
-?>
-```
-Ce code signifie : Si le jeton de session n’est pas encore défini, on le génère aléatoirement et on l’enregistre pour la session courante.
-Ensuite, à chaque connexion d’un utilisateur, on va devoir générer un jeton **qui lui est propre**.
-Pour cela, on peut avant chaque connexion régénérer le jeton, en **supprimant** le jeton de la session précédente :
-``` php
-unset($_SESSION['jeton']);
-```
-Il reste ensuite à modifier dynamiquement les liens de suppression, admettons que le lien précédent était écrit de la forme :
-``` php
-<a href="http://www.monblog.fr/del.php?id=<? echo get_article_id(); 
-?>>Supprimer l'article</a>
-```
-On le remplace par :
-``` php
-<a href="http://www.monblog.fr/del.php?id=<? echo get_article_id() . 
-"&jeton=". $_SESSION['jeton']; ?>>Supprimer l'article</a>
-```
-L’url de suppression s’afficher donc comme ceci :
-``` php
-http://www.monblog.fr/del.php?id=1&jeton=b6cf20590a57f4685c9bdc6c53d12ff8
-```
-Au lieu de s’afficher comme cela :
-``` php
-http://www.monblog.fr/del.php?id=1
-```
-Et enfin, dans notre fichier de suppression del.php, on va s’assurer qu’il existe un jeton et que ce jeton soit valide. Le fichier, avant toute modification se présentait comme cela :
-``` php
-<?php
-if(isset($_GET['id'])) {
-   supprimer_article($_GET['id']);
-} else {
-   die("Aucun ID d'article sélectionné.");
-}
-?>
-```
-Il devient donc :
-``` php
-<?php
-if(isset($_GET['id']) && isset($_GET['jeton']) && 
-($_GET['jeton'] == $_SESSION['jeton'])) {
-   supprimer_article($_GET['id']);
-} else {
-   die("ID ou jeton de session invalide.");
-}
-?>
-```
-Ce qui  signifie : Si l’id de l’article est défini mais aussi le jeton et que ce jeton correspond au jeton de la session actuelle, alors on peut supprimer.
-Dernière note, on utilise $_GET qui récupère les paramètres depuis une URL, il aurait été préférable est **encore plus sécurisé** d’utiliser $_POST avec un formulaire pour ne pas afficher de jeton dans les URLs.
-
-# 4. L’Attaque par force brute
-## 4.1 Définition :
-L’attaque par force brute est utilisé pour trouver un mot de passe ou unecléentestantune par une et tous les combinaisons possibles. Il nécessite effectivement beaucoup de temps d'exécution mais il est efficace. Cette attaque aussi est souvent combiné avec l’attaque par dictionnaire dont l’attaquant utilise d’énormes dictionnaires contenant des mots de passes régulièrement utilisé.
-## 4.2 Comment s’enprotéger ?
-Se défendre contre l’attaque par force brute :
-### La vérification par captcha :
-Ce sont de petites cases avec des lettres déformées que vousdevez recopier pour confirmer que vousêtes un humain.
-![image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724)  
-[Voici le lien de cette image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724) !
-Cettedernière technique esttrès simple. Elle consiste à insérer un captcha de vérification dans vos formulaires. C'est presque imparable pour être certain qu'on a à faire à un humain et non à un script.
-### Utilisation de mots de passes robustes pour une durée limitée :
-Elle consiste à renforcer le mot de passe en évitant les écueils qui exploitent les attaques par force brute optimisée. Renforcer la force brute du mot de passe consisteà :
-* allonger le mot de pass eou la clé si cela est possible
-* utiliser la plus grande gamme de symboles possibles (minuscules, majuscules, ponctuations, chiffres)  
-
-De plus, l’utilisateur sera forcé à changer son mot de passe après une certaine période définie par le développeur. Ce nouveau mot de passe ne pourra pas être un mot de passe qui a été déjà utilisé par cetutilisateur.
-### Authentication multiple :
-L’authentification multiple (Multi-Factor Authentication enanglais qui correspond à MFA) est un système de sécurité qui fait appel à plusieurs méthodes d’authentification, à partir de différentes catégories d’informations d’identification (des preuves), pour vérifier l’identité de l’utilisateur qui souhaite se connecter.  
-Par exemple, l’authentification à 3 facteurs qui n’est que l’utilisation du nom de l’utilisateur, son mot de passe et ensuite l’insertion d’un code de quelques chiffres qui a été envoyé à l’utilisateur (par SMS, email...) pour vérifier son identité.  
-
-# 5. La faille Include
-## 5.1 Définition :
+# 3. La faille Include
+## 3.1 Définition :
 La faille include consiste à l’usage frauduleux de la fonction Include(). C’est une fonction utilisée dans pas mal de langage de programmation pour exécuter du code PHP situé dans une autre page, autrement dit, inclure une page dans une autre. Comme cette fonction permet l'accès à d’autres pages, elle offre aux hackers la possibilité d’accéder aux données sur le serveur. Il ya deux types de faille Include:
 *	La faille include à distance: C’est à la fois la plus fréquente et la plus facile à exploiter. Le Hacker peut inclure n’importe quelle page au biais de la fonction, y compris une page “backdoor” sur le serveur. Celle-ci va donner des droits privilégiés à son auteur et va donc lui permettre d’accéder aux données du site et de le modifier.
 *	La faille include en local: À part inclure une backdoor, la fonction include() permet de naviguer sur les répertoires du site et récupérer facilement le fichier des passwords ..
 
-## 5.2 Comment s’en protéger ? 
+## 3.2 Comment s’en protéger ? 
 Il faut d’abord détecter la faille sur le site. Pour ce faire, on essaye d’inclure une page inexistante et le message d’erreur php sera la preuve que la faille existe. Ensuite, il faudra rédiger un fichier htaccess de configuration qui permettra de gérer les droits d’accès aux sites et grâce au code ci-dessous, on filtrera les pages incluses:
 
-# 6. Les Virus
-## 6.1 Définition :
+# 4. Les Virus
+## 4.1 Définition :
 
 De nos jours, les pirates informatiques, les auteurs de virus, les spammers et les développeurs de programmes espions sont regroupés sous le nom de « cybercriminels ». Les menaces Web aident ces individus à atteindre un objectif précis. L'un de ces objectifs est de voler des informations à des fins de revente.
 Il existe des dizaines de milliers de virus/programmes malveillants et de nouveaux sont créés chaque jour, les virus informatiques de notre époque peuvent provoquer des dommages importants en exploitant les failles de sécurité des réseaux d'entreprise, des systèmes de messagerie électronique et des sites Web. En effet, c’est un petit programme qui s’attache à un programme complet et le modifie et donc mène à une perturbation. En exécutant le programme, il y a exécution du virus en parallèle afin de contaminer le système. De plus, tous les moyens d’échange de données numériques comme les réseaux informatiques, le cédérom, les clefs USB…favorisent la diffusion du programme malveillants. Il est susceptible d'altérer le fonctionnement de votre ordinateur, de détruire des informations, voire d'en récupérer pour les transmettre à distance. Souvent, l’utilisateur déclenche lui-même l’activation du virus en ouvrant un fichier contaminé.  
@@ -227,7 +116,7 @@ Il existe des dizaines de milliers de virus/programmes malveillants et de nouvea
 * Ransomware : Il infecte l’ordinateur, puis chiffre les données telles que les documents personnels, photos… et puis demandent un racon pour les récupérer. Si vous refusez d payer, les données seront supprimées.
 * Adware : Les programmes envoient automatiquement des publicités aux ordinateurs. Bien que certains adware soient relativement sans danger, d'autres variantes utilisent des outils de suivi permettant de récupérer des informations sur votre site ou sur votre historique de navigation.  
 
-## 6.2 Comment s’en protéger ?
+## 4.2 Comment s’en protéger ?
 Les applications web, faisant partie intégrante des processus métiers, sont une cible facile pour les cybercriminels lorsqu’elles ne sont pas sécurisées. Une fois que les menaces sont détectées, elles peuvent se propager sur tout le système et son élimination complète demande un temps et des efforts considérables. En outre, les systèmes n’appliquant pas des stratégies de sécurité bien strictes, sont les plus exposées aux menaces.  
 De plus, le meilleur moyen de se protéger contre les virus est d’équiper votre ordinateur d’un anti-virus. Ce dernier, a pour mission d’analyser tous les fichiers entrant sur votre ordinateur et d’identifier ceux qui sont infectés. En adoptant les bons gestes, et donc en respectant la mise à jour du antivirus, le fait de ne pas ouvrir les mails ou les fichiers ou même les sites internet suspicieux contribuent à la protection des menaces. De plus, un pare-feu peut aussi jouer un rôle dans la protection, car il peutsignaler une activité suspecte lorsqu’un virus ou un ver tente de se connecter à votre ordinateur. Un pare-feu peut également empêcher les virus, les vers et les pirates informatiques de télécharger sur votre ordinateur des programmes potentiellement malveillants.  
 
