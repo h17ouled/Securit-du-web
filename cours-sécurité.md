@@ -104,8 +104,33 @@ La faille include consiste à l’usage frauduleux de la fonction Include(). C�
 ## 3.2 Comment s’en protéger ? 
 Il faut d’abord détecter la faille sur le site. Pour ce faire, on essaye d’inclure une page inexistante et le message d’erreur php sera la preuve que la faille existe. Ensuite, il faudra rédiger un fichier htaccess de configuration qui permettra de gérer les droits d’accès aux sites et grâce au code ci-dessous, on filtrera les pages incluses:
 
-# 4. Les Virus
+# 4. L’Attaque par force brute
 ## 4.1 Définition :
+L’attaque par force brute est utilisé pour trouver un mot de passe ou une clé en testant une par une et tous les combinaisons possibles. Il nécessite effectivement beaucoup de temps d'exécution mais il est efficace. Cette attaque aussi est souvent combiné avec l’attaque par dictionnaire dont l’attaquant utilise d’énormes dictionnaires contenant des mots de passes régulièrement utilisé.
+
+## 4.2 Comment s’enprotéger ?
+
+Se défendre contre l’attaque par force brute :
+
+### La vérification par captcha :
+
+Ce sont de petites cases avec des lettres déformées que vousdevez recopier pour confirmer que vousêtes un humain.
+![image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724)  
+[Voici le lien de cette image](https://assets.change.org/photos/5/lh/ou/BElHoUUqfADSIGU-800x450-noPad.jpg?1519282724) !
+Cette dernière technique est très simple. Elle consiste à insérer un captcha de vérification dans vos formulaires. C'est presque imparable pour être certain qu'on a à faire à un humain et non à un script.
+### Utilisation de mots de passes robustes pour une durée limitée :
+Elle consiste à renforcer le mot de passe en évitant les écueils qui exploitent les attaques par force brute optimisée. Renforcer la force brute du mot de passe consisteà :
+* allonger le mot de pass eou la clé si cela est possible
+* utiliser la plus grande gamme de symboles possibles (minuscules, majuscules, ponctuations, chiffres)  
+
+De plus, l’utilisateur sera forcé à changer son mot de passe après une certaine période définie par le développeur. Ce nouveau mot de passe ne pourra pas être un mot de passe qui a été déjà utilisé par cetutilisateur.
+
+### Authentication multiple :
+L’authentification multiple (Multi-Factor Authentication enanglais qui correspond à MFA) est un système de sécurité qui fait appel à plusieurs méthodes d’authentification, à partir de différentes catégories d’informations d’identification (des preuves), pour vérifier l’identité de l’utilisateur qui souhaite se connecter.  
+
+
+# 5. Les Virus
+## 5.1 Définition :
 
 De nos jours, les pirates informatiques, les auteurs de virus, les spammers et les développeurs de programmes espions sont regroupés sous le nom de « cybercriminels ». Les menaces Web aident ces individus à atteindre un objectif précis. L'un de ces objectifs est de voler des informations à des fins de revente.
 Il existe des dizaines de milliers de virus/programmes malveillants et de nouveaux sont créés chaque jour, les virus informatiques de notre époque peuvent provoquer des dommages importants en exploitant les failles de sécurité des réseaux d'entreprise, des systèmes de messagerie électronique et des sites Web. En effet, c’est un petit programme qui s’attache à un programme complet et le modifie et donc mène à une perturbation. En exécutant le programme, il y a exécution du virus en parallèle afin de contaminer le système. De plus, tous les moyens d’échange de données numériques comme les réseaux informatiques, le cédérom, les clefs USB…favorisent la diffusion du programme malveillants. Il est susceptible d'altérer le fonctionnement de votre ordinateur, de détruire des informations, voire d'en récupérer pour les transmettre à distance. Souvent, l’utilisateur déclenche lui-même l’activation du virus en ouvrant un fichier contaminé.  
@@ -116,7 +141,7 @@ Il existe des dizaines de milliers de virus/programmes malveillants et de nouvea
 * Ransomware : Il infecte l’ordinateur, puis chiffre les données telles que les documents personnels, photos… et puis demandent un racon pour les récupérer. Si vous refusez d payer, les données seront supprimées.
 * Adware : Les programmes envoient automatiquement des publicités aux ordinateurs. Bien que certains adware soient relativement sans danger, d'autres variantes utilisent des outils de suivi permettant de récupérer des informations sur votre site ou sur votre historique de navigation.  
 
-## 4.2 Comment s’en protéger ?
+## 5.2 Comment s’en protéger ?
 Les applications web, faisant partie intégrante des processus métiers, sont une cible facile pour les cybercriminels lorsqu’elles ne sont pas sécurisées. Une fois que les menaces sont détectées, elles peuvent se propager sur tout le système et son élimination complète demande un temps et des efforts considérables. En outre, les systèmes n’appliquant pas des stratégies de sécurité bien strictes, sont les plus exposées aux menaces.  
 De plus, le meilleur moyen de se protéger contre les virus est d’équiper votre ordinateur d’un anti-virus. Ce dernier, a pour mission d’analyser tous les fichiers entrant sur votre ordinateur et d’identifier ceux qui sont infectés. En adoptant les bons gestes, et donc en respectant la mise à jour du antivirus, le fait de ne pas ouvrir les mails ou les fichiers ou même les sites internet suspicieux contribuent à la protection des menaces. De plus, un pare-feu peut aussi jouer un rôle dans la protection, car il peutsignaler une activité suspecte lorsqu’un virus ou un ver tente de se connecter à votre ordinateur. Un pare-feu peut également empêcher les virus, les vers et les pirates informatiques de télécharger sur votre ordinateur des programmes potentiellement malveillants.  
 
